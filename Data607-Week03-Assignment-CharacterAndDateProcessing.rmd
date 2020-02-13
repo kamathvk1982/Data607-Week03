@@ -1,0 +1,169 @@
+---
+title: "Data607-Week03-Assignment-Character Manipulation And Date Processing"
+author: "Vinayak Kamath"
+date: "2/12/2020"
+output: 
+  pdf_document:
+    extra_dependencies:
+    - geometry
+    - multicol
+    - multirow
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("stringr")
+```
+
+
+### 1. Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS":
+
+  
+```{r}
+theUrl <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/majors-list.csv"
+majors.df <- read.csv(file = theUrl, header = T , sep = ',' )
+str(majors.df)
+
+major.pattern <- c("DATA" ,  "STATISTICS")
+
+majors.df[grep("DATA|STATISTICS", majors.df$Major, value = F, ignore.case = T), ]
+```  
+
+
+
+
+--------------------------------------------------------------------------------
+
+\clearpage  
+  
+### 2. Write code that transforms the data below:
+
+[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange"
+
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+
+[9] "elderberry"   "lime"         "lychee"       "mulberry"    
+
+[13] "olive"        "salal berry"
+
+### Into a format like this:
+
+c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+
+  
+```{r}
+fruits.data <- c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+fruits.data
+#toString(fruits.data)
+#final.string <- toString(gsub(pattern = ", ",replacement ='",  "',toString(fruits.data)))
+#final.string
+dput(as.character(fruits.data))
+```  
+
+
+
+
+--------------------------------------------------------------------------------
+
+\clearpage  
+
+
+The two exercises below are taken from R for Data Science, 14.3.5.1 in the on-line version:
+
+### 3. Describe, in words, what these expressions will match:
+
+```{r}
+test.str <-  c('aaa','aab','aba','baa','bab','bba','bbb','ccc','ccb','cbc','cbb','cab','caa','abc','abb','acc','aaaa','aaab','aaba','abaa','baaa','baab','baba','bbaa','bbab','bbba','bbbb','abcd','aabc','aaac','abbc','cccc','ccbc','ccba','ccbb','ccaa','cbbc','redder','hannah','madam','tatfortat','abaCat','abaca','a\\1','a\\1','a','b','c','abbabaab','abbaabba','abab','abba')
+
+```  
+
+**(.)\1\1**  
+*Answer:* Matches occurrence of a character repeating three times in the input string; Sample below:   
+```{r}
+pattern <- '(.)\\1\\1'
+test.str %>% 
+  str_subset(pattern)
+```  
+
+**"(.)(.)\\2\\1"**     
+*Answer:* Matches a palindrome of 4 characters anywhere in the input string; Sample below:  
+```{r}
+pattern <- "(.)(.)\\2\\1"
+test.str %>% 
+  str_subset(pattern)
+```  
+
+**(..)\1**    
+*Answer:* Matches occurrence of two characters followed by the same two characters in the input string; Sample below.  
+```{r}
+pattern <- "(..)\\1"
+test.str %>% 
+  str_subset(pattern)
+```  
+
+**"(.).\\1.\\1"**    
+*Answer:* Matches occurrence of a 5 character string where the first, third and 5th character are all same, and the second and fourth character can be any other character (same or different) in the input string; Sample below.    
+```{r}
+pattern <- "(.).\\1.\\1"
+test.str %>% 
+  str_subset(pattern)
+```  
+  
+**"(.)(.)(.).*\\3\\2\\1"**    
+*Answer:* Matches occurrence of any 6 or more character string where the first and last character are same, the second and second last character are same, the third and third last character are same and between them zero or more occurrence of any characters; sample as below:  
+```{r}
+pattern <- "(.)(.)(.).*\\3\\2\\1"
+test.str %>% 
+  str_subset(pattern)
+```  
+
+
+  
+
+--------------------------------------------------------------------------------
+
+\clearpage  
+
+
+
+### 4. Construct regular expressions to match words that:
+```{r}
+test.str <- c("TIME","CHURCH","ELEVEN","POP","SEVENTEEN","BANANA" ,"EAGLE")  
+```
+
+**Start and end with the same character.**  
+*Answer:*    ^(.).*\\1$ ; sample as below:    
+```{r}
+pattern <- "^(.).*\\1$"
+test.str %>% 
+  str_subset(pattern)
+
+```  
+
+**Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)**  
+*Answer:*    (..).*\\1 ; sample as below:    
+```{r}
+pattern <- "(..).*\\1"
+test.str %>% 
+  str_subset(pattern)
+
+```  
+
+**Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)**  
+*Answer:*    (.).*\\1.*\\1 ; sample as below:  
+```{r}
+pattern <- "(.).*\\1.*\\1"
+test.str %>% 
+  str_subset(pattern)
+
+```  
+
+
+
+
+--------------------------------------------------------------------------------
+
+\clearpage  
+
