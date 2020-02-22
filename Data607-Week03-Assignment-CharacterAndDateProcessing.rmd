@@ -75,7 +75,14 @@ The two exercises below are taken from R for Data Science, 14.3.5.1 in the on-li
 ### 3. Describe, in words, what these expressions will match:
 
 ```{r}
-test.str <-  c('aaa','aab','aba','baa','bab','bba','bbb','ccc','ccb','cbc','cbb','cab','caa','abc','abb','acc','aaaa','aaab','aaba','abaa','baaa','baab','baba','bbaa','bbab','bbba','bbbb','abcd','aabc','aaac','abbc','cccc','ccbc','ccba','ccbb','ccaa','cbbc','redder','hannah','madam','tatfortat','abaCat','abaca','a\\1','a\\1','a','b','c','abbabaab','abbaabba','abab','abba')
+test.str <-  c('aaa','aab','aba','baa','bab','bba','bbb','ccc','ccb','cbc','cbb','cab','caa'
+               ,'abc','abb','acc','aaaa','aaab','aaba','abaa','baaa','baab','baba','bbaa',
+               'bbab','bbba','bbbb','abcd','aabc','aaac','abbc','cccc','ccbc','ccba','ccbb',
+               'ccaa','cbbc','redder','hannah','madam','tatfortat','abaCat','abaca','a\\1',
+               'a\\1','a','b','c','abbabaab','abbaabba','abab','abba', 'anna','"anna"', 
+               'Maria','""','"able was I ere I saw hannah"','p"ullu"p','c"omo"n', 'common',
+               'pullup','banana','b"anana"' ,'rotavator','r"otavato"r','teret','"teret"',
+               '"eva, Can I Stab Bats In A Cave"?')
 
 ```  
 
@@ -88,9 +95,9 @@ test.str %>%
 ```  
 
 **"(.)(.)\\2\\1"**     
-*Answer:* Matches a palindrome of 4 characters anywhere in the input string; Sample below:  
+*Answer:* Matches a palindrome of 4 characters enclosed within doublw quotes; anywhere in the input string. Sample below:  
 ```{r}
-pattern <- "(.)(.)\\2\\1"
+pattern <- '"(.)(.)\\2\\1"'
 test.str %>% 
   str_subset(pattern)
 ```  
@@ -98,23 +105,23 @@ test.str %>%
 **(..)\1**    
 *Answer:* Matches occurrence of two characters followed by the same two characters in the input string; Sample below.  
 ```{r}
-pattern <- "(..)\\1"
+pattern <- '(..)\\1'
 test.str %>% 
   str_subset(pattern)
 ```  
 
 **"(.).\\1.\\1"**    
-*Answer:* Matches occurrence of a 5 character string where the first, third and 5th character are all same, and the second and fourth character can be any other character (same or different) in the input string; Sample below.    
+*Answer:* Matches occurrence of a 5 character string enclosed in double quotes; where the first, third and 5th character are all same, and the second and fourth character can be any other character (same or different) in the input string. Sample below.    
 ```{r}
-pattern <- "(.).\\1.\\1"
+pattern <- '"(.).\\1.\\1"'
 test.str %>% 
   str_subset(pattern)
 ```  
   
 **"(.)(.)(.).*\\3\\2\\1"**    
-*Answer:* Matches occurrence of any 6 or more character string where the first and last character are same, the second and second last character are same, the third and third last character are same and between them zero or more occurrence of any characters; sample as below:  
+*Answer:* Matches occurrence of any 6 or more character string enclosed in double quotes; where the first and last character are same, the second and second last character are same, the third and third last character are same and between them zero or more occurrence of any characters. sample as below:  
 ```{r}
-pattern <- "(.)(.)(.).*\\3\\2\\1"
+pattern <- '"(.)(.)(.).*\\3\\2\\1"'
 test.str %>% 
   str_subset(pattern)
 ```  

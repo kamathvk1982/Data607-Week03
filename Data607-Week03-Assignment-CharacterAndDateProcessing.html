@@ -1688,7 +1688,14 @@ dput(as.character(fruits.data))</code></pre>
 </div>
 <div id="describe-in-words-what-these-expressions-will-match" class="section level3">
 <h3>3. Describe, in words, what these expressions will match:</h3>
-<pre class="r"><code>test.str &lt;-  c(&#39;aaa&#39;,&#39;aab&#39;,&#39;aba&#39;,&#39;baa&#39;,&#39;bab&#39;,&#39;bba&#39;,&#39;bbb&#39;,&#39;ccc&#39;,&#39;ccb&#39;,&#39;cbc&#39;,&#39;cbb&#39;,&#39;cab&#39;,&#39;caa&#39;,&#39;abc&#39;,&#39;abb&#39;,&#39;acc&#39;,&#39;aaaa&#39;,&#39;aaab&#39;,&#39;aaba&#39;,&#39;abaa&#39;,&#39;baaa&#39;,&#39;baab&#39;,&#39;baba&#39;,&#39;bbaa&#39;,&#39;bbab&#39;,&#39;bbba&#39;,&#39;bbbb&#39;,&#39;abcd&#39;,&#39;aabc&#39;,&#39;aaac&#39;,&#39;abbc&#39;,&#39;cccc&#39;,&#39;ccbc&#39;,&#39;ccba&#39;,&#39;ccbb&#39;,&#39;ccaa&#39;,&#39;cbbc&#39;,&#39;redder&#39;,&#39;hannah&#39;,&#39;madam&#39;,&#39;tatfortat&#39;,&#39;abaCat&#39;,&#39;abaca&#39;,&#39;a\\1&#39;,&#39;a\\1&#39;,&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;abbabaab&#39;,&#39;abbaabba&#39;,&#39;abab&#39;,&#39;abba&#39;)</code></pre>
+<pre class="r"><code>test.str &lt;-  c(&#39;aaa&#39;,&#39;aab&#39;,&#39;aba&#39;,&#39;baa&#39;,&#39;bab&#39;,&#39;bba&#39;,&#39;bbb&#39;,&#39;ccc&#39;,&#39;ccb&#39;,&#39;cbc&#39;,&#39;cbb&#39;,&#39;cab&#39;,&#39;caa&#39;
+               ,&#39;abc&#39;,&#39;abb&#39;,&#39;acc&#39;,&#39;aaaa&#39;,&#39;aaab&#39;,&#39;aaba&#39;,&#39;abaa&#39;,&#39;baaa&#39;,&#39;baab&#39;,&#39;baba&#39;,&#39;bbaa&#39;,
+               &#39;bbab&#39;,&#39;bbba&#39;,&#39;bbbb&#39;,&#39;abcd&#39;,&#39;aabc&#39;,&#39;aaac&#39;,&#39;abbc&#39;,&#39;cccc&#39;,&#39;ccbc&#39;,&#39;ccba&#39;,&#39;ccbb&#39;,
+               &#39;ccaa&#39;,&#39;cbbc&#39;,&#39;redder&#39;,&#39;hannah&#39;,&#39;madam&#39;,&#39;tatfortat&#39;,&#39;abaCat&#39;,&#39;abaca&#39;,&#39;a\\1&#39;,
+               &#39;a\\1&#39;,&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;abbabaab&#39;,&#39;abbaabba&#39;,&#39;abab&#39;,&#39;abba&#39;, &#39;anna&#39;,&#39;&quot;anna&quot;&#39;, 
+               &#39;Maria&#39;,&#39;&quot;&quot;&#39;,&#39;&quot;able was I ere I saw hannah&quot;&#39;,&#39;p&quot;ullu&quot;p&#39;,&#39;c&quot;omo&quot;n&#39;, &#39;common&#39;,
+               &#39;pullup&#39;,&#39;banana&#39;,&#39;b&quot;anana&quot;&#39; ,&#39;rotavator&#39;,&#39;r&quot;otavato&quot;r&#39;,&#39;teret&#39;,&#39;&quot;teret&quot;&#39;,
+               &#39;&quot;eva, Can I Stab Bats In A Cave&quot;?&#39;)</code></pre>
 <p><strong>(.)\1\1</strong><br />
 <em>Answer:</em> Matches occurrence of a character repeating three times in the input string; Sample below:</p>
 <pre class="r"><code>pattern &lt;- &#39;(.)\\1\\1&#39;
@@ -1696,30 +1703,30 @@ test.str %&gt;%
   str_subset(pattern)</code></pre>
 <pre><code>##  [1] &quot;aaa&quot;  &quot;bbb&quot;  &quot;ccc&quot;  &quot;aaaa&quot; &quot;aaab&quot; &quot;baaa&quot; &quot;bbba&quot; &quot;bbbb&quot; &quot;aaac&quot; &quot;cccc&quot;</code></pre>
 <p><strong>“(.)(.)\2\1”</strong><br />
-<em>Answer:</em> Matches a palindrome of 4 characters anywhere in the input string; Sample below:</p>
-<pre class="r"><code>pattern &lt;- &quot;(.)(.)\\2\\1&quot;
+<em>Answer:</em> Matches a palindrome of 4 characters enclosed within doublw quotes; anywhere in the input string. Sample below:</p>
+<pre class="r"><code>pattern &lt;- &#39;&quot;(.)(.)\\2\\1&quot;&#39;
 test.str %&gt;% 
   str_subset(pattern)</code></pre>
-<pre><code>##  [1] &quot;aaaa&quot;     &quot;baab&quot;     &quot;bbbb&quot;     &quot;cccc&quot;     &quot;cbbc&quot;     &quot;redder&quot;  
-##  [7] &quot;hannah&quot;   &quot;abbabaab&quot; &quot;abbaabba&quot; &quot;abba&quot;</code></pre>
+<pre><code>## [1] &quot;\&quot;anna\&quot;&quot;   &quot;p\&quot;ullu\&quot;p&quot;</code></pre>
 <p><strong>(..)\1</strong><br />
 <em>Answer:</em> Matches occurrence of two characters followed by the same two characters in the input string; Sample below.</p>
-<pre class="r"><code>pattern &lt;- &quot;(..)\\1&quot;
+<pre class="r"><code>pattern &lt;- &#39;(..)\\1&#39;
 test.str %&gt;% 
   str_subset(pattern)</code></pre>
-<pre><code>## [1] &quot;aaaa&quot;     &quot;baba&quot;     &quot;bbbb&quot;     &quot;cccc&quot;     &quot;abbabaab&quot; &quot;abab&quot;</code></pre>
+<pre><code>## [1] &quot;aaaa&quot;       &quot;baba&quot;       &quot;bbbb&quot;       &quot;cccc&quot;       &quot;abbabaab&quot;  
+## [6] &quot;abab&quot;       &quot;banana&quot;     &quot;b\&quot;anana\&quot;&quot;</code></pre>
 <p><strong>“(.).\1.\1”</strong><br />
-<em>Answer:</em> Matches occurrence of a 5 character string where the first, third and 5th character are all same, and the second and fourth character can be any other character (same or different) in the input string; Sample below.</p>
-<pre class="r"><code>pattern &lt;- &quot;(.).\\1.\\1&quot;
+<em>Answer:</em> Matches occurrence of a 5 character string enclosed in double quotes; where the first, third and 5th character are all same, and the second and fourth character can be any other character (same or different) in the input string. Sample below.</p>
+<pre class="r"><code>pattern &lt;- &#39;&quot;(.).\\1.\\1&quot;&#39;
 test.str %&gt;% 
   str_subset(pattern)</code></pre>
-<pre><code>## [1] &quot;abaCat&quot; &quot;abaca&quot;</code></pre>
+<pre><code>## [1] &quot;b\&quot;anana\&quot;&quot;</code></pre>
 <p>**&quot;(.)(.)(.).*\3\2\1&quot;**<br />
-<em>Answer:</em> Matches occurrence of any 6 or more character string where the first and last character are same, the second and second last character are same, the third and third last character are same and between them zero or more occurrence of any characters; sample as below:</p>
-<pre class="r"><code>pattern &lt;- &quot;(.)(.)(.).*\\3\\2\\1&quot;
+<em>Answer:</em> Matches occurrence of any 6 or more character string enclosed in double quotes; where the first and last character are same, the second and second last character are same, the third and third last character are same and between them zero or more occurrence of any characters. sample as below:</p>
+<pre class="r"><code>pattern &lt;- &#39;&quot;(.)(.)(.).*\\3\\2\\1&quot;&#39;
 test.str %&gt;% 
   str_subset(pattern)</code></pre>
-<pre><code>## [1] &quot;redder&quot;    &quot;hannah&quot;    &quot;tatfortat&quot; &quot;abbaabba&quot;</code></pre>
+<pre><code>## [1] &quot;r\&quot;otavato\&quot;r&quot;                       &quot;\&quot;eva, Can I Stab Bats In A Cave\&quot;?&quot;</code></pre>
 <hr />
 
 </div>
